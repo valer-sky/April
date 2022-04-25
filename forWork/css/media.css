@@ -1,0 +1,48 @@
+@media (min-width: 1500px) {
+    .field {
+      margin-right: 400px;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .field {
+      margin-right: 300px;
+    }
+  }
+  
+  @media (max-width: 1000px) {
+    .delMobile {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 930px) {
+    html {
+      font-size: 15px;
+    }
+  }
+  
+  @media (max-width: 700px) {
+    html {
+      font-size: 12px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    #info-content {
+      padding: 0 0 20px 0;
+    }
+  }
+  
+  @media (max-width: 370px) {
+    html {
+      font-size: 10px;
+    }
+  }
+  
+  @media (max-width: 300px) {
+    .place {
+      width: auto;
+    }
+  }
+  

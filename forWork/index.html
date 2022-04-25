@@ -1,91 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SPA</title>
-  <link rel="stylesheet" type="text/css" href="css/reset.css">
-  <link rel="stylesheet" type="text/css" href="css/normalize.css">
-  <link rel="stylesheet" type="text/css" href="css/styles.css">
-  <link rel="stylesheet" type="text/css" href="css/media.css">
-  <link rel="stylesheet" href="parallax/parallax.css" type="text/css">
+<!DOCTYPE HTML>
+<html>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="cleartype" content="on"/>
+<head>
+    <meta charset="utf-8">
+    <title>Match 3</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/media.css">
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="cleartype" content="on"/>
 </head>
 <body>
 
 <header id="header">
-  <ul class="menu" id="menu">
-      <li><a href="#rules" id="rulesButton">Правила</a></li>
-      <li><a href="#highScore" id="tableHighScoreButton">Таблица рекордов</a></li>
-      <li><a href="#" id='soundOnOffButton' class="sound">Включить звук</a></li>
-  </ul>
-  <div id='mobile-menu-toggle' class="mobile-menu-toggle">
-      <span class="first"></span>
-      <span class="second"></span>
-      <span class="third"></span>
-  </div>
+    <ul class="menu" id="menu">
+        <li><a href="#rules" id="rulesButton">Правила</a></li>
+        <li><a href="#highScore" id="tableHighScoreButton">Таблица рекордов</a></li>
+        <li><a href="#" id='soundOnOffButton' class="sound">Включить звук</a></li>
+    </ul>
+    <div id='mobile-menu-toggle' class="mobile-menu-toggle">
+        <span class="first"></span>
+        <span class="second"></span>
+        <span class="third"></span>
+    </div>
 </header>
 
 <div class="background">
-  <div class="backgroundColor" id="c1"></div>
+    <div class="backgroundColor" id="c1"></div>
 
-  <div class="delMobile parallaxLayer" id="c3"></div>
-  <div class="delMobile parallaxLayer" id="c4"></div>
-  <div class="delMobile parallaxLayer" id="c5"></div>
-  <div class="delMobile parallaxLayer" id="c6"></div>
-  <div class="parallaxLayer" id="c7"></div>
+    <div class="delMobile parallaxLayer" id="c3"></div>
+    <div class="delMobile parallaxLayer" id="c4"></div>
+    <div class="delMobile parallaxLayer" id="c5"></div>
+    <div class="delMobile parallaxLayer" id="c6"></div>
+    <div class="parallaxLayer" id="c7"></div>
 
 
-  <div id="mobileBackground"></div>
-  <div class="infoPage" id="info-container">
-      <div id="info-content"></div>
-      <a href="#" id="close-button" class="button place infoButton">Закрыть</a>
-  </div>
-  <div class="container">
-      <div class="leftNav">
-          <a href="#" class="button place" id="startButton">новая игра</a>
-          <div class="recessed place"> Счет <span class="counter" id="counter">0</span></div>
-          <div class="recessed place"> Шаг <span class="counter" id="counterStep">0</span></div>
-      </div>
-      <div class="field">
-          <div class="game recessed">
-              <div class="gameField">
-                  <svg id="game"></svg>
-              </div>
-          </div>
-      </div>
-      <div class="messageBox" id="message-container">
-          <div id="message-content"></div>
-          <a href="#" id="close-message" class="button place infoButton" onclick=sendName()>Закрыть</a>
-      </div>
-  </div>
+    <div id="mobileBackground"></div>
+    <div class="infoPage" id="info-container">
+        <div id="info-content"></div>
+        <a href="#" id="close-button" class="button place infoButton">Закрыть</a>
+    </div>
+    <div class="container">
+        <div class="leftNav">
+            <a href="#" class="button place" id="startButton">новая игра</a>
+            <div class="recessed place"> Счет <span class="counter" id="counter">0</span></div>
+            <div class="recessed place"> Шаг <span class="counter" id="counterStep">0</span></div>
+        </div>
+        <div class="field">
+            <div class="game recessed">
+                <div class="gameField">
+                    <svg id="game"></svg>
+                </div>
+            </div>
+        </div>
+        <div class="messageBox" id="message-container">
+            <div id="message-content"></div>
+            <a href="#" id="close-message" class="button place infoButton" onclick=sendName()>Закрыть</a>
+        </div>
+    </div>
 </div>
 
 <script src="View.js"></script>
 <script src="Controller.js"></script>
 <script src="Model.js"></script>
-<script src="script.js"></script>
+<script src="parallax/parallax.js"></script>
 
 <script src="http://fe.it-academy.by/JQ/jquery.js"></script>
 
 <script>
-  let gameController = new Controller,
-      gameModel = new Model,
-      gameView = new View
+    let gameController = new Controller,
+        gameModel = new Model,
+        gameView = new View
 
-  gameModel.init(gameView, gameController)
-  gameView.start(gameModel)
-  gameController.init(gameModel, gameView)
+    gameModel.init(gameView, gameController)
+    gameView.start(gameModel)
+    gameController.init(gameModel, gameView)
 
-  function sendName() {           //отправить имя пользователя в таблицу рекордов
-      if (document.getElementById('myName') !== null) {
-          let nickName = document.getElementById('myName').value
-          gameView.pushMessageToTableHighscore(nickName)
-      }
-  }
+    function sendName() {           //отправить имя пользователя в таблицу рекордов
+        if (document.getElementById('myName') !== null) {
+            let nickName = document.getElementById('myName').value
+            gameView.pushMessageToTableHighscore(nickName)
+        }
+    }
 </script>
 </body>
 </html>
+
+
+
+
