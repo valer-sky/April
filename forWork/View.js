@@ -1,7 +1,5 @@
 "use strict";
 
-"use strict";
-
 function View() {
     let self = this,
         myModel = null;
@@ -17,18 +15,14 @@ function View() {
         scorePlate = document.getElementById('counter'),    //счет
         stepsPlate = document.getElementById('counterStep');  //шаги
 
-    let columns = 8, // количество колонок и столбцов в поле
-        rows = 8,
-        speedExch,  //скорость обмена
-        speedFall,   //скорость падения
-        scoreNumber;   //счет
+    let scoreNumber;   //счет
 
     let SVGElem = document.getElementById("game"),
         game = document.getElementsByClassName("game")[0],
         field = document.getElementsByClassName('container')[0],
-        buttons = document.getElementsByClassName('leftNav')[0],
+        // buttons = document.getElementsByClassName('leftNav')[0],
         parallaxLayers = document.getElementsByClassName('parallaxLayer'),
-        backPictureMobile = document.getElementById('mobileBackground'),
+        // backPictureMobile = document.getElementById('mobileBackground'),
         header = document.getElementById('header');
 
     let messages,         //таблица рекордов
@@ -37,42 +31,11 @@ function View() {
         updatePassword; //пароль для блокировки записи другим человеком в таблицу рекордов
 
 
-    class Element {            //кружок
-        constructor() {
-            this.row = null;         //адрес элемента в матрице
-            this.column = null;
-            this.posX = null;
-            this.posY = null;
-            this.transY = 0;
-            this.transX = 0;
-        }
+   
 
-        move() {   //ф-я переезда эл-та на новое место
-            let elPiece = document.getElementById(this.row + '' + this.column);
-            if (elPiece !== null) {
-                elPiece.setAttribute('transform', "translate(" + this.transX + "," + this.transY + ")");
-            }
-        }
+  
 
-        reset() {
-            this.posX = null;
-            this.posY = null;
-            this.transX = 0;
-            this.transY = 0;
-        }
-    }
-
-    self.getTransform = function (myElement) {
-        var xforms = myElement.getAttribute('transform');
-        var parts = /translate\(\s*([^\s,)]+)[ ,]([^\s,)]+)/.exec(xforms);
-        return {
-            x: Number(parts[1]),
-            y: Number(parts[2])
-        }
-    }
-
-    let firstEl = new Element(),
-        secondEl = new Element();
+  
 
     self.start = function (model) {
         myModel = model;
@@ -114,7 +77,7 @@ function View() {
 
             if (pageWidth > pageHeight) {
                 field.style.flexDirection = 'row';
-                buttons.style.flexDirection = 'column';
+                
                 if ((pageWidth / pageHeight < 1.2 &&
                     pageWidth / pageHeight > 1) ||
                     (pageHeight / pageWidth < 1.1 &&
@@ -125,7 +88,7 @@ function View() {
                 }
             } else {
                 field.style.flexDirection = 'column';
-                buttons.style.flexDirection = 'row';
+               
                 if ((pageWidth / pageHeight < 1.35 &&
                     pageWidth / pageHeight > 1) ||
                     (pageHeight / pageWidth < 1.35 &&
@@ -140,48 +103,22 @@ function View() {
             if (pageWidth > pageHeight) {
                 b = Math.round(Math.round(pageHeight / 100) * 0.75);
                 field.style.flexDirection = 'row';
-                buttons.style.flexDirection = 'column';
+                
             } else {
                 b = Math.round(Math.round(pageWidth / 100) * 0.75);
                 field.style.flexDirection = 'column';
-                buttons.style.flexDirection = 'row';
+                
             }
         }
 
-        cellWidthHeight = b * 10;   // размер ячейки
+          // размер ячейки
 
-        speedExch = cellWidthHeight / 10;   //скорость обмена
-        speedFall = cellWidthHeight / 10;  // скорость падения
-
-        game.style.width = rows * cellWidthHeight + 'px';  //размеры игры
-        game.style.height = columns * cellWidthHeight + 'px';
-
-        SVGElem.setAttribute("width", rows * cellWidthHeight);
-        SVGElem.setAttribute("height", columns * cellWidthHeight);
-
-        return cellWidthHeight
+        
     }
 
-    self.resizeField = function (cellWidthHeight) {            // изменить размер всех элементов на поле
-        let elements = document.querySelectorAll("#game circle")
-        for (var i = 0; i < elements.length; i++) {
-            let id = elements[i].getAttribute('id'),
-                row = id[1],
-                column = id[0];
+   
 
-            elements[i].setAttribute("cx", row * cellWidthHeight + cellWidthHeight / 2);
-            elements[i].setAttribute("cy", column * cellWidthHeight + cellWidthHeight / 2);
-            elements[i].setAttribute('r', 0.9 * cellWidthHeight / 2);
-        }
-    }
-
-    self.deleteField = function () {                   //удалить все элементы на поле
-        let elements = document.querySelectorAll("#game circle");
-        for (var i = 0; i < elements.length; i++) {
-            elements[i].remove();
-        }
-        return elements
-    }
+   
 
     self.music = function () {
         clickAudio = new Audio("music/dzin.mp3");
@@ -198,30 +135,9 @@ function View() {
         stepsPlate.innerHTML = counterSteps;
     }
 
-    self.drawElem = function (x, y, color) {     //рисует на поле элемент в опр. координатах и цвета
-        let elem = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-        elem.setAttribute("cx", x + cellWidthHeight / 2);
-        elem.setAttribute("cy", y + cellWidthHeight / 2);
-        elem.setAttribute("r", 0.9 * cellWidthHeight / 2);
-        elem.setAttribute("fill", color);
+    
 
-        elem.setAttribute('id', y / cellWidthHeight + '' + x / cellWidthHeight); //двузначное число, где первая цифра -номер ряда, вторая цифра - номер колонки
-        SVGElem.appendChild(elem);
-        elem.setAttribute('transform', 'translate(0,0)');
-    }
 
-    self.deleteGroup = function (collect) {//  удалить ряд одинаковых элементов
-        for (let i = 0; i < collect.length; i++) {
-            if (collect[i] !== null) {
-                let id = collect[i][0] + '' + collect[i][1],
-                    element = document.getElementById(id);
-                if (element !== null) {
-                    element.remove();
-                }
-            }
-        }
-        return collect
-    }
 
     self.soundOnOff = function () {           //вкл/выкл звук
         checkerText = checker.textContent;
@@ -239,99 +155,9 @@ function View() {
         clickAudio.play();
     }
 
-    self.fallAnimationTick = function (collectMove) {  //движение группы блоков вниз
-        for (let i = 0; i < collectMove.length; i++) {
-            let id = collectMove[i],
-                elPiece = document.getElementById(id),
-                trans = self.getTransform(elPiece),
-                el = new Element;
+   
 
-            el.row = id[0];
-            el.column = id[1];
-
-            el.transX = trans.x;
-            el.transY = trans.y + speedFall;
-
-            el.posY = parseInt(elPiece.getAttribute('cy')) + el.transY;
-
-            if (el.posY > ((parseInt(el.row) + 1) * cellWidthHeight + cellWidthHeight / 2)) {
-                for (let i = 0; i < collectMove.length; i++) {
-                    let id = collectMove[i],
-                        elPiece = document.getElementById(id);
-                    elPiece.setAttribute('id', (parseInt(id[0]) + 1) + '' + id[1]);  //меняем id упавших на 1 уровень элементов
-                }
-                myModel.stopFall(); //в модель, что анимация закончена
-                return false
-            }
-            el.move();
-        }
-    }
-
-    self.exchangeAnimationTick = function (first, second, sideMove) {   //обмен местами элементов
-        firstEl.row = first['row'];
-        secondEl.row = second['row'];
-        firstEl.column = first['column'];
-        secondEl.column = second['column'];
-
-        let firstElPiece = document.getElementById(firstEl.row + '' + firstEl.column),
-            secondElPiece = document.getElementById(secondEl.row + '' + secondEl.column),
-            id1 = firstEl.row + '' + firstEl.column,
-            id2 = secondEl.row + '' + secondEl.column,
-            trans1 = self.getTransform(firstElPiece),
-            trans2 = self.getTransform(secondElPiece);
-
-        if (sideMove === 'left') {
-            firstEl.transX = trans1.x - speedExch;
-            secondEl.transX = trans2.x + speedExch;
-            firstEl.posX -= speedExch;
-
-            if (firstEl.posX < -cellWidthHeight) {
-                delEl();
-                return
-            }
-        } else if (sideMove === 'right') {
-            firstEl.transX = trans1.x + speedExch;
-            secondEl.transX = trans2.x - speedExch;
-            firstEl.posX += speedExch;
-
-            if (firstEl.posX > cellWidthHeight) {
-                delEl();
-                return
-            }
-        } else if (sideMove === 'bottom') {
-            firstEl.transY = trans1.y + speedExch;
-            secondEl.transY = trans2.y - speedExch;
-            firstEl.posY += speedExch;
-
-            if (firstEl.posY > cellWidthHeight) {
-                delEl();
-                return
-            }
-        } else if (sideMove === 'top') {
-            firstEl.transY = trans1.y - speedExch;
-            secondEl.transY = trans2.y + speedExch;
-            firstEl.posY -= speedExch;
-
-            if (firstEl.posY < -cellWidthHeight) {
-                delEl();
-                return
-            }
-        }
-        firstEl.move();
-        secondEl.move();
-
-        function delEl() {      //обмен закончен
-            self.clickSound();
-            firstEl.reset();
-            secondEl.reset();
-
-            firstElPiece.setAttribute('id', id2); //меняем id элементов
-            secondElPiece.setAttribute('id', id1);
-
-            myModel.stopExchange();
-            return
-        }
-    }
+    
 
     self.showPage = function (infoType) {                   //показать страницу с информацией
         let infoContainer = document.getElementById('info-container')
@@ -514,6 +340,8 @@ function View() {
         }
     }
 }
+
+
 
 
 

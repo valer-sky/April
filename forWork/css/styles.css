@@ -1,36 +1,12 @@
-.background {
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-}
 
-#mobileBackground {
-  position: absolute;
-  height: 110vh;
 
-  background: url(../parallax/cityscape/layer1-min.png) no-repeat 0 102%;
-  width: 140vw;
-  display: none;
-}
 
-.backgroundColor {
-  position: absolute;
-  height: 100vh;
-  width: 100vw;
-}
 
-.container {
-  position: relative;
-  display: flex;
-  margin: 60px 2vmin 2vmin 2vmin;
-  justify-content: space-around;
-  align-items: center;
-}
 
-.leftNav {
-  position: relative;
-  display: flex;
-}
+
+
+
+
 
 .place {
   border-radius: 22em;
