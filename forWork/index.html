@@ -1,75 +1,202 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="utf-8">
-    <title>Match 3</title>
-    <link rel="stylesheet" type="text/css" href="css/reset.css">
-    <link rel="stylesheet" type="text/css" href="css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <link rel="stylesheet" type="text/css" href="css/media.css">
-    
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="cleartype" content="on"/>
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" />
+	<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<title>MEMORY GAME</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="./css/styles.css" rel="stylesheet">
+	<script src="jquery.js"></script>
+	
 </head>
+
 <body>
 
-<header id="header">
-    <ul class="menu" id="menu">
-        <li><a href="#rules" id="rulesButton">Правила</a></li>
-        <li><a href="#highScore" id="tableHighScoreButton">Таблица рекордов</a></li>
-        <li><a href="#" id='soundOnOffButton' class="sound">Включить звук</a></li>
-    </ul>
-    <div id='mobile-menu-toggle' class="mobile-menu-toggle">
-        <span class="first"></span>
-        <span class="second"></span>
-        <span class="third"></span>
-    </div>
-</header>
+<div class="wrapper">
 
-<div class="background">
-  
+	
 
+	<div class="middle">
 
-    
-    <div class="infoPage" id="info-container">
-        <div id="info-content"></div>
-        <a href="#" id="close-button" class="button place infoButton">Закрыть</a>
-    </div>
-    <div class="container">
-        
-        
-        <div class="messageBox" id="message-container">
-            <div id="message-content"></div>
-            <a href="#" id="close-message" class="button place infoButton" onclick=sendName()>Закрыть</a>
-        </div>
-    </div>
-</div>
+		<div class="container">
+			<main id="article" class="content">
+			</main><!-- .content -->
+		</div><!-- .container-->
 
-<script src="View.js"></script>
-<script src="Controller.js"></script>
-<script src="Model.js"></script>
-<script src="parallax/parallax.js"></script>
-<!-- <script src="script.js"></script>
-<script src="style.js"></script> -->
-<script src="http://fe.it-academy.by/JQ/jquery.js"></script>
+		<aside class="left-sidebar">
+			<button id="MA" value="" onclick='MainPage()'>Главная</button>
+			<button id="RU" value="" onclick='RulesPage()'>Правила игры</button>
+			<button id="SP" value="" onclick='StartPage()'>Начать игру</button>
+			<button id="RE" value="" onclick='ScorePage()'>Рекорды</button>
+			<button id="AB" value="" onclick='AboutPage()'>О проекте</button>
+		</aside><!-- .left-sidebar -->
+
+	</div><!-- .middle-->
+
+</div><!-- .wrapper -->
+
 
 <script>
-    let gameController = new Controller,
-        gameModel = new Model,
-        gameView = new View
-
-    gameModel.init(gameView, gameController)
-    gameView.start(gameModel)
-    gameController.init(gameModel, gameView)
-
-    function sendName() {           //отправить имя пользователя в таблицу рекордов
-        if (document.getElementById('myName') !== null) {
-            let nickName = document.getElementById('myName').value
-            gameView.pushMessageToTableHighscore(nickName)
+	var AjaxHandlerScript="http://fe.it-academy.by/AjaxStringStorage2.php";
+	var MessagesA;
+	window.onhashchange=RefreshFunc;
+	var MainHash={};
+	function UpdateContent(URL) {
+		MainHash=URL;
+		var Content="";
+		switch ( MainHash.pagename ) { 
+			case 'Main':
+				Content+="<h6>Главная страница</h6>";
+				Content+="<p>Головоломка — непростая задача, для решения которой, как правило, требуется сообразительность, а не специальные знания высокого уровня. Цель: развить логическое мышление, внимательность, аналитические и стратегические способности. Некоторые головоломки известны с глубокой древности. Оригинальные логические задачи находят на стенах египетских пирамид, в древнегреческих манускриптах и в других исторических памятниках. Эпохой расцвета в средневековой истории головоломок можно считать конец IX века. Рост уровня образования и снижение религиозной нетерпимости к наукам привели к расширению круга любителей логических задач.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec laoreet nunc, vitae rutrum ante. Mauris congue nulla ac diam venenatis aliquet. Sed aliquam orci ac purus laoreet, non molestie eros consequat. Nam laoreet risus dui, sed luctus nibh blandit viverra. Quisque quis malesuada nulla. Nulla a nibh mattis, consequat dolor mattis, faucibus arcu. Cras faucibus scelerisque sem, quis venenatis turpis facilisis at. Quisque tincidunt malesuada ipsum, at posuere metus posuere et. Suspendisse tristique semper massa in dictum. Quisque scelerisque sit amet sem at molestie. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque vel.</p>";
+				break;
+			case 'Rules':
+				Content+="<h6>Правила</h6>";
+				Content+="<p>MemoryGame – игра для тренировки памяти и развития ассоциативного мышления. Подходит как для детей дошкольного так и для детей послевузовского возраста.</p><p>При использовании специальных тем может быть повышена внимательность, быстрота запоминания. При использовании нескольких уровней сложности возможно увеличение запоминаемого объема и развития памяти в различных направлениях.</p><p>Возможность сохранения результатов позволяет анализировать стабильность запоминания. Проводить по результатам дополнительные мероприятия.</p><p>И в конце концов, игра позволяет просто весело провести время<img id='smile' src='smile_smoll.png' alt='альтернативный текст'></p>";
+				break;
+			case 'Start':
+				Content+="<h6>Начало игры</h6>";
+				Content+="<p><strong>выбери уровень сложности</strong><br><a href='game.html?diff=1'>Поле 4х2</a> Уровень 1 - тестовый.<br><a href='game.html?diff=2'>Поле 6х4</a> Уровень 2.<br></p>";
+				break;
+			case 'Score':
+				ShowRecords();
+				break;
+			case 'About':
+				Content+="<h6>О проекте</h6>";
+				Content+="<p>Выпускной проект: 'Memory game'.<br>Автор: Людмила Дучинская.<br>Преподаватель: Алексей Локтев.<br>Дата: 16.05.15.</p>";
+				break;
+		}
+		document.getElementById('article').innerHTML=Content;
+	}
+	function RefreshFunc() {
+		var URLHash=window.location.hash; //#main
+		var URLname=URLHash.substr(1); //main
+		if ( URLname!="" ){
+			var N=URLname.split("_")
+			var URL={ pagename: N[0] };
+			UpdateContent(URL);
+		}
+		else{
+			UpdateContent( { pagename:'Main' } );
+		}
+	}
+	function MainPage() {
+		location.hash='Main';
+		RefreshFunc();
+	}
+	function RulesPage() {
+		location.hash='Rules';
+		RefreshFunc();
+	}
+	function StartPage() {
+		location.hash='Start';
+		RefreshFunc();
+	}
+	function ScorePage() {
+		location.hash='Score';
+		RefreshFunc();
+	}
+	function AboutPage() {
+		location.hash='About';
+		RefreshFunc();
+	}
+	RefreshFunc();
+	
+	//Показать Рекорды
+	function ErrorHandler(jqXHR,StatusStr,ErrorStr){
+		alert(StatusStr+' '+ErrorStr);
+	}
+	function ShowRecords(){
+		$.ajax(
+				{
+					url : AjaxHandlerScript,
+					type : 'POST',
+					data : { f : 'READ', n : 'DUCHINSKAYA_MEMORY_GAME' },
+					cache : false,
+					success : ReadReady,
+					error : ErrorHandler
+				}
+			);
+	}
+	function ReadReady(ResultH){
+		if ( ResultH.error!=undefined ){
+			alert(ResultH.error); 
+		}
+		else{
+			MessagesA=[];
+			MessagesA=JSON.parse(ResultH.result);
+			AddRecords();
+		}
+	}
+	function AddRecords(){
+		$('#article').empty();
+		var CONT="<h6>Топ-10 последних рекордов</h6>";
+		CONT+='<p class="fff">(Нажмите на заголовок, чтобы отсортировать колонку)</p>'
+		CONT+='<table class="spc" border=0 cellspacing=0 cellpadding=5>';
+		CONT+='<tr><th class="thd" onclick="sort(this)" title="Нажмите на заголовок, чтобы отсортировать колонку">Дата</th><th class="thd" onclick="sort(this)" title="Нажмите на заголовок, чтобы отсортировать колонку">Игрок</th><th class="thd" onclick="sort(this)" title="Нажмите на заголовок, чтобы отсортировать колонку">Результат</th></tr>';
+		for ( var i=MessagesA.length-1; i>=0;--i){
+			var Fill= MessagesA[i];
+			var date;
+			var name;
+			var scor;
+			for(var k in Fill){
+				if(k=='date'){
+					date=Fill[k];
+				}
+				else if(k=='name'){
+					name=Fill[k];
+				}
+				else if(k=='score'){
+					scor=Fill[k];
+				}
+			}
+			CONT +='<tr><td>'+date+'</td><td>'+name+'</td><td>'+scor+'</td></tr>';
+		}
+		CONT+='</table>';
+		document.getElementById('article').innerHTML =CONT;
+	}
+	
+	function sort(el) {	
+   var col_sort = el.innerHTML; 
+   var tr = el.parentNode;
+   var table = tr.parentNode;    
+   var th, arrow, col_sort_num;
+   
+	for (var i=0; (th = tr.getElementsByTagName("th").item(i)); i++) {
+   	if (th.innerHTML == col_sort) {
+            col_sort_num = i; 
+            if (th.prevsort == "y"){
+                arrow = th.firstChild;
+                el.up = Number(!el.up);
+            }else{
+                th.prevsort = "y";
+                arrow = th.insertBefore(document.createElement("span"),th.firstChild);
+                el.up = 0;
+            }
+            arrow.innerHTML = el.up?"↑ ":"↓ ";
+        }else{
+            if (th.prevsort == "y"){
+                th.prevsort = "n";
+                if (th.firstChild) th.removeChild(th.firstChild);
+            }
         }
     }
+	 
+	 var a = new Array();
+	 
+    for(i=1; i < table.rows.length; i++) {
+	 	a[i-1] = new Array();
+	 	a[i-1][0]=table.rows[i].getElementsByTagName("td").item(col_sort_num).innerHTML;
+		a[i-1][1]=table.rows[i];
+	 }
+	 
+	 a.sort();
+	 if(el.up) a.reverse();	 
+	 
+	 for(i=0; i < a.length; i++)
+	 table.appendChild(a[i][1]);
+}
+	
 </script>
 </body>
 </html>
